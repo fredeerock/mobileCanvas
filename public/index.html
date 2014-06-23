@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Sockets!</title>
+
+	<script src="/socket.io/socket.io.js"></script>
+
+	<style> 
+		body {margin: 0; padding: 0;} 
+		/** {cursor: none}; */
+	</style>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
+</head>
+
+<body>
+
+	<script type="application/javascript">
+
+		/////////////
+		//SOCKET.IO//
+		/////////////
+
+		// Make the connection
+		var socket = io('http://localhost:3000');
+
+		// Send data to the server
+		window.onload = function() {
+			socket.emit('from client', { client: 'hello server' });
+		}
+
+		// Receive data from the server
+		socket.on('from server', function (data) {
+			console.log(data);
+		});
+
+	</script>
+
+	<canvas id="myCanvas"></canvas>
+	<script type="text/javascript" src="js/viz.js"></script>
+
+</body>
+</html>

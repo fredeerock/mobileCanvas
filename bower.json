@@ -1,0 +1,7 @@
+{
+  "name": "sockets",
+  "version": "0.0.1",
+  "dependencies": {
+    "toxiclibsjs": "0.2.x"
+  }
+}
