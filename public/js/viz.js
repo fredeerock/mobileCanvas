@@ -2,6 +2,15 @@
 //CANVAS ANIMATION//
 ////////////////////
 
+/* 
+
+TO DO:
+- insert NexusUI elements
+- insert gradients based on mouse positoin
+- create an array of circle objects, one for each user
+
+*/
+
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
@@ -63,8 +72,9 @@ function drawCursor(x, y) {
 	socket.emit('from client', {moveX: x, moveY: y});
 	ctx.beginPath();
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
-	ctx.arc(x, y, 50, 0, 2*Math.PI);
+	ctx.arc(x, y, 20, 0, 2*Math.PI);
 	ctx.fill();
+	// emitCircle(x, y);
 }
 
 function draw(){
@@ -83,5 +93,35 @@ function draw(){
 	requestAnimationFrame(draw);
 }
 
+
+// // This function sends the data for a circle to the server
+// // so that the server can broadcast it to every other user
+// function emitCircle( x, y ) {
+
+//   // Each Socket.IO connection has a unique session id
+//   // var sessionId = socket.sessionid;
+  
+//   // An object to describe the circle's draw data
+//   var data = { x: x, y: y };
+
+//   // send a 'drawCircle' event with data and sessionId to the server
+//   socket.emit( 'drawCircle', data )
+
+//   // Lets have a look at the data we're sending
+//   //console.log( data )
+
+// }
+
+// // Listen for 'drawCircle' events
+// // created by other users
+// socket.on( 'drawCircle', function( data ) {
+
+//   console.log( 'drawCircle event recieved:', data );
+
+//   // Draw the circle using the data sent
+//   // from another user
+//   drawCursor( data.x, data.y );
+  
+// })
 
 

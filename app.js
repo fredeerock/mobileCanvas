@@ -62,8 +62,21 @@ io.on('connection', function (socket) {
   socket.emit('from server', { server: 'hello client' });
 
   // Receive data from client with socket.on
-  socket.on('from client', function (data) { console.log(data);});
+  socket.on('from client', function (data) { console.log(data) });
+
+
+  // // Send circles to everyone
+  // socket.on( 'drawCircle', function( data ) {
+
+  //   // console.log("broadcast:");
+  //   console.log( {broadcastIs: data} );
+
+  //   socket.broadcast.emit( 'drawCircle', data );
+
+  // });
 
 });
+
+
 
 

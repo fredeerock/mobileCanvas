@@ -5,9 +5,9 @@
 	<title>Sockets!</title>
 
 	<script src="/socket.io/socket.io.js"></script>
-
+<!-- 
 	<script src="http://jsconsole.com/remote.js?6EB7AA2D-9E50-4A9F-9290-770E10AD2AF6"></script>
-
+ -->
 	<style> 
 		body {margin: 0; padding: 0;} 
 		/** {cursor: none}; */
@@ -28,12 +28,12 @@
 		// Make the connection
 		var socket = io('http://digitalart-7.lsu.edu:3000');
 
-		// Send data to the server
+		// Send a hello to the server
 		window.onload = function() {
 			socket.emit('from client', { client: 'hello server' });
 		}
 
-		// Receive data from the server
+		// Receive a hello from the server
 		socket.on('from server', function (data) {
 			console.log(data);
 		});
