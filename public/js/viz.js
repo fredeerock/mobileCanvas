@@ -5,9 +5,6 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var mx;
-var my;
-
 window.addEventListener('resize', resizeCanvas, false );
 
 window.onload = function() {
@@ -47,29 +44,26 @@ function touchCancel(event) {
 }
 
 function touchMove(event) {
-	tx = event.touches[0].pageX;
-	ty = event.touches[0].pageY;
+	var tx = event.touches[0].pageX;
+	var ty = event.touches[0].pageY;
+	drawCursor(tx, ty);
 	
-	ctx.beginPath();
-	ctx.fillStyle = "rgba(255, 255, 255, 1)";
-	ctx.arc(tx, ty, 50, 0, 2*Math.PI);
-	ctx.fill();
-
-	console.log({touchMoveX: tx, touchMoveY: ty});
+	// Stop iOS from bouncing on drag
 	event.preventDefault();
 }
 
 function mouseMove(event) {
-	mx = event.clientX;
-	my = event.clientY;
-	drawCursor();
+	var mx = event.clientX;
+	var my = event.clientY;
+	drawCursor(mx, my);
 }
 
-function drawCursor() {
-	socket.emit('from client', { clientMouseX: mx, clientMouseY: my });
+function drawCursor(x, y) {
+	console.log({moveX: x, moveY: y});
+	socket.emit('from client', {moveX: x, moveY: y});
 	ctx.beginPath();
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
-	ctx.arc(mx, my, 50, 0, 2*Math.PI);
+	ctx.arc(x, y, 50, 0, 2*Math.PI);
 	ctx.fill();
 }
 
