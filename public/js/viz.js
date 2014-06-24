@@ -19,42 +19,53 @@ window.onload = function() {
 
 function setup(){
 	// Touch Events
-	canvas.addEventListener("touchstart", handleStart, false);
-	canvas.addEventListener("touchend", handleEnd, false);
-	canvas.addEventListener("touchcancel", handleCancel, false);
-	canvas.addEventListener("touchleave", handleEnd, false);
-	canvas.addEventListener("touchmove", handleMove, false);
+	canvas.addEventListener("touchstart", touchStart, false);
+	canvas.addEventListener("touchend", touchEnd, false);
+	canvas.addEventListener("touchcancel", touchCancel, false);
+	canvas.addEventListener("touchleave", touchEnd, false);
+	canvas.addEventListener("touchmove", touchMove, false);
 
 	// Mouse Events
-	canvas.addEventListener('mousemove', drawMouse, false);
+	canvas.addEventListener('mousemove', mouseMove, false);
 }
 
-function resizeCanvas() {
+function resizeCanvas(event) {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
 
-function handleStart (argument) {
+function touchStart(event) {
 	console.log( "handleStart" );
 }
 
-function handleEnd (argument) {
+function touchEnd(event) {
 	console.log( "handleEnd" );
 }
 
-function handleCancel (argument) {
+function touchCancel(event) {
 	console.log( "handleCancel" );
 }
 
-function handleMove (argument) {
-	console.log( "handleMove" );
+function touchMove(event) {
+	tx = event.touches[0].pageX;
+	ty = event.touches[0].pageY;
+	
+	ctx.beginPath();
+	ctx.fillStyle = "rgba(255, 255, 255, 1)";
+	ctx.arc(tx, ty, 50, 0, 2*Math.PI);
+	ctx.fill();
+
+	console.log({touchMoveX: tx, touchMoveY: ty});
 	event.preventDefault();
-	drawMouse();
 }
 
-function drawMouse() {
+function mouseMove(event) {
 	mx = event.clientX;
 	my = event.clientY;
+	drawCursor();
+}
+
+function drawCursor() {
 	socket.emit('from client', { clientMouseX: mx, clientMouseY: my });
 	ctx.beginPath();
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
