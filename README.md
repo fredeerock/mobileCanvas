@@ -1,4 +1,6 @@
 mobileCanvas
 ============
 
-Combining Socket.IO, Node.js, and NexusUI.
+Computational Design for NexusUI.
+
+Combining Toxiclibsjs, Socket.IO, Node.js, and NexusUI.
