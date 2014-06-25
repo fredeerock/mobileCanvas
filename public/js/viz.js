@@ -2,10 +2,9 @@
 //CANVAS ANIMATION//
 ////////////////////
 
-/* 
-
-TO DO:
-- get gradients based on mouse positoin
+/*
+TODO
+- gradients based on mouse positoin
 - make a new viz with NexusUI elements
 
 */
@@ -20,7 +19,7 @@ window.onload = function() {
 	resizeCanvas();
 	requestAnimationFrame(draw);
 	socket.emit('from client', "hello server" );
-}
+};
 
 function setup(){
 	// Touch Events
@@ -66,9 +65,6 @@ function mouseMove(event) {
 	drawCursor(mx, my);
 }
 
-var theX = 0.0;
-var theY = 0.0;
-
 function drawCursor(x, y) {
 
 	// console.log({moveX: x, moveY: y});
@@ -77,53 +73,42 @@ function drawCursor(x, y) {
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
 	ctx.arc(x, y, 20, 0, 2*Math.PI);
 	ctx.fill();
-	// emitCircle(x, y);
-	
-	// return {x:x, y:y};
-	theX = x;
-	theY = y;
 
 	cursorXY.x = x;
 	cursorXY.y = y;
-
-	console.log(cursorXY.x);
 }
 
-var cursorXY = {};
+var cursorXY = {x:0, y:0};
+
+// var gradient
 
 function draw(){
 	//Draw background
-	ctx.fillStyle = "rgba(10, 10, 10, 0.05)"
+	ctx.fillStyle = "rgba(10, 10, 10, 0.05)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	
-	//Draw line
-	ctx.beginPath();
-	ctx.moveTo(canvas.width/2,0);
-	ctx.lineTo(canvas.width/2,canvas.height);
-	ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-	ctx.stroke();
+	// //Draw line
+	// ctx.beginPath();
+	// ctx.moveTo(canvas.width/2,0);
+	// ctx.lineTo(canvas.width/2,canvas.height);
+	// ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+	// ctx.stroke();
 
 	// Draw gradient
-	var my_gradient = ctx.createLinearGradient(0,0,0,170);
-	my_gradient.addColorStop(0,"black");
+	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+	my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
 	my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
 	ctx.fillStyle = my_gradient;
-	ctx.fillRect(20,20,150,100);
-
-
-	// console.log(theY/canvas.height);
+	ctx.fillRect(0,0,canvas.width/2,canvas.height);
 
 	// Recursively call draw
 	requestAnimationFrame(draw);
 }
 
-function returnCursorXY() {
-
-}
 
 Math.clip = function(number, min, max) {
   return Math.max(min, Math.min(number, max));
-}
+};
 
 // console.log(Math.clip(150, 0, 100));
 
