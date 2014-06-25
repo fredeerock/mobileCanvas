@@ -21,8 +21,10 @@ var canY = [];
 var mouseIsDown = 0;
 var yStart = [];
 var boardNum = 10;
-var stop1 = 1;
-var stop0 = 0;
+var stopA1 = 0;
+var stopB1 = 0;
+var stopA2 = 0;
+var stopB2 = 0;
 
 
 
@@ -44,13 +46,13 @@ function setup(){
 	// Mouse Events
 	canvas.addEventListener('mousemove', mouseMove, false);
 
-	for (i=0; i<18 ;i++) {
-		yStart[i] = 0;
-	}
+	// for (i=0; i<18 ;i++) {
+	// 	yStart[i] = 0;
+	// }
 
-	for (var n = 0; n < 18; n++) {
-		bars.push(new bar(n));	
-	}
+	// for (var n = 0; n < 18; n++) {
+	// 	bars.push(new bar(n));	
+	// }
 
 }
 
@@ -155,30 +157,56 @@ function draw(){
 		// barY[i] = cursorXY.y/canvas.height;
 
 		// console.log(yStart[i]);
-//
+
 		// for(var i = 0; i < 2; i++) {
-		// 	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
 
-		// 	// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
-		// 	my_gradient.addColorStop(stop0,"black");
-		// 	my_gradient.addColorStop(stop0,"white");
+			ctx.beginPath();
+			var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
 
-		// 	//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
-		// 	ctx.rect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
+			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
+			my_gradient.addColorStop(stopA1,"black");
+			my_gradient.addColorStop(stopB1,"white");
 
-		// 	ctx.fillStyle = my_gradient;
-		// 	ctx.fill();
+			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
+			ctx.rect((canvas.width/boardNum)*0,0,(canvas.width/boardNum)-5,canvas.height);
+
+			ctx.fillStyle = my_gradient;
+			ctx.fill();
 			
-		// 	// for (j=0;j<len;j++) {
-		// 		if (ctx.isPointInPath(canX[0], canY[0]) ) {
-		// 			stop0 = canY[0]/canvas.height;
-		// 			stop1 = canY[0]/canvas.height;
+			// for (j=0;j<len;j++) {
+				if (ctx.isPointInPath(canX[0], canY[0]) ) {
+					stopA1 = canY[0]/canvas.height;
+					stopB1 = canY[0]/canvas.height;
 
-		// 			// target[i]=-30;
-		// 			console.log("boom");
-		// 			// yStart[i] = cursorXY.y/canvas.height;
-		// 		// }
-		// 	}
+					// target[i]=-30;
+					console.log("boom 1");
+					// yStart[i] = cursorXY.y/canvas.height;
+				 }
+
+
+			ctx.beginPath();
+			var my_gradient2 = ctx.createLinearGradient(0,0,0,canvas.height);
+
+			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
+			my_gradient2.addColorStop(stopA2,"black");
+			my_gradient2.addColorStop(stopB2,"white");
+
+			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
+			ctx.rect((canvas.width/boardNum)*1,0,(canvas.width/boardNum)-5,canvas.height);
+
+			ctx.fillStyle = my_gradient2;
+			ctx.fill();
+			
+			// for (j=0;j<len;j++) {
+				if (ctx.isPointInPath(canX[0], canY[0]) ) {
+					stopA2 = canY[0]/canvas.height;
+					stopB2 = canY[0]/canvas.height;
+
+					// target[i]=-30;
+					console.log("boom 2");
+					// yStart[i] = cursorXY.y/canvas.height;
+				 }
+			// }
 		// }
 
 	// }
@@ -194,37 +222,35 @@ function draw(){
 	requestAnimationFrame(draw);
 }
 
-var bars = [];
+// var bars = [];
 
+// function bar(m) {
+// 	this.m = m;
+// 	// console.log("hi" + m);
 
+// 	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
 
-function bar(m) {
-	this.m = m;
-	// console.log("hi" + m);
+// 			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
+// 			my_gradient.addColorStop(stop0,"black");
+// 			my_gradient.addColorStop(stop0,"white");
 
-	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+// 			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
+// 			ctx.rect((canvas.width/boardNum)*m,0,(canvas.width/boardNum)-5,canvas.height);
 
-			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
-			my_gradient.addColorStop(stop0,"black");
-			my_gradient.addColorStop(stop0,"white");
-
-			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
-			ctx.rect((canvas.width/boardNum)*m,0,(canvas.width/boardNum)-5,canvas.height);
-
-			ctx.fillStyle = my_gradient;
-			ctx.fill();
+// 			ctx.fillStyle = my_gradient;
+// 			ctx.fill();
 			
-			// for (j=0;j<len;j++) {
-				if (ctx.isPointInPath(canX[0], canY[0]) ) {
-					stop0 = canY[0]/canvas.height;
-					stop1 = canY[0]/canvas.height;
+// 			// for (j=0;j<len;j++) {
+// 				if (ctx.isPointInPath(canX[0], canY[0]) ) {
+// 					stop0 = canY[0]/canvas.height;
+// 					stop1 = canY[0]/canvas.height;
 
-					// target[i]=-30;
-					console.log("boom");
-					// yStart[i] = cursorXY.y/canvas.height;
-				// }
-			}
-}
+// 					// target[i]=-30;
+// 					console.log("boom");
+// 					// yStart[i] = cursorXY.y/canvas.height;
+// 				// }
+// 			}
+// }
 
 
 
