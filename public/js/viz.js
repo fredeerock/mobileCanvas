@@ -14,6 +14,8 @@ var ctx = canvas.getContext("2d");
 
 window.addEventListener('resize', resizeCanvas, false );
 
+var cursorXY = {x:0, y:0};
+
 window.onload = function() {
 	setup();
 	resizeCanvas();
@@ -53,7 +55,9 @@ function touchCancel(event) {
 function touchMove(event) {
 	var tx = event.touches[0].pageX;
 	var ty = event.touches[0].pageY;
-	drawCursor(tx, ty);
+	// drawCursor(tx, ty);
+	cursorXY.x = tx;
+	cursorXY.y = ty;
 	
 	// Stop iOS from bouncing on drag
 	event.preventDefault();
@@ -62,23 +66,12 @@ function touchMove(event) {
 function mouseMove(event) {
 	var mx = event.clientX;
 	var my = event.clientY;
-	drawCursor(mx, my);
+	// drawCursor(mx, my);
+	cursorXY.x = mx;
+	cursorXY.y = my;
 }
 
-function drawCursor(x, y) {
 
-	// console.log({moveX: x, moveY: y});
-	socket.emit('from client', {moveX: x, moveY: y});
-	ctx.beginPath();
-	ctx.fillStyle = "rgba(255, 255, 255, 1)";
-	ctx.arc(x, y, 20, 0, 2*Math.PI);
-	ctx.fill();
-
-	cursorXY.x = x;
-	cursorXY.y = y;
-}
-
-var cursorXY = {x:0, y:0};
 
 // var gradient
 
@@ -95,14 +88,30 @@ function draw(){
 	// ctx.stroke();
 
 	// Draw gradient
-	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-	my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
-	my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
-	ctx.fillStyle = my_gradient;
-	ctx.fillRect(0,0,canvas.width/2,canvas.height);
+
+	for (var i = 0; i < 18; i = i + 1) {
+		var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+		my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
+		my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
+		ctx.fillStyle = my_gradient;
+
+		ctx.fillRect((canvas.width/18)*i,0,(canvas.width/18)-2,canvas.height);
+	}
+
+	drawCursor(cursorXY.x, cursorXY.y);
 
 	// Recursively call draw
 	requestAnimationFrame(draw);
+}
+
+function drawCursor(x, y) {
+	// console.log({moveX: x, moveY: y});
+	socket.emit('from client', {moveX: x, moveY: y});
+	ctx.beginPath();
+	ctx.fillStyle = "rgba(255, 255, 255, 1)";
+	ctx.arc(x, y, 20, 0, 2*Math.PI);
+	ctx.fill();
+
 }
 
 
