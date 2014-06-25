@@ -5,9 +5,8 @@
 /* 
 
 TO DO:
-- insert NexusUI elements
-- insert gradients based on mouse positoin
-- create an array of circle objects, one for each user
+- get gradients based on mouse positoin
+- make a new viz with NexusUI elements
 
 */
 
@@ -67,15 +66,30 @@ function mouseMove(event) {
 	drawCursor(mx, my);
 }
 
+var theX = 0.0;
+var theY = 0.0;
+
 function drawCursor(x, y) {
-	console.log({moveX: x, moveY: y});
+
+	// console.log({moveX: x, moveY: y});
 	socket.emit('from client', {moveX: x, moveY: y});
 	ctx.beginPath();
 	ctx.fillStyle = "rgba(255, 255, 255, 1)";
 	ctx.arc(x, y, 20, 0, 2*Math.PI);
 	ctx.fill();
 	// emitCircle(x, y);
+	
+	// return {x:x, y:y};
+	theX = x;
+	theY = y;
+
+	cursorXY.x = x;
+	cursorXY.y = y;
+
+	console.log(cursorXY.x);
 }
+
+var cursorXY = {};
 
 function draw(){
 	//Draw background
@@ -89,9 +103,33 @@ function draw(){
 	ctx.strokeStyle = "rgba(255, 255, 255, 1)";
 	ctx.stroke();
 
+	// Draw gradient
+	var my_gradient = ctx.createLinearGradient(0,0,0,170);
+	my_gradient.addColorStop(0,"black");
+	my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
+	ctx.fillStyle = my_gradient;
+	ctx.fillRect(20,20,150,100);
+
+
+	// console.log(theY/canvas.height);
+
 	// Recursively call draw
 	requestAnimationFrame(draw);
 }
+
+function returnCursorXY() {
+
+}
+
+Math.clip = function(number, min, max) {
+  return Math.max(min, Math.min(number, max));
+}
+
+Number.prototype.clamp = function(min, max) {
+  return Math.min(Math.max(this, min), max);
+};
+
+// console.log(Math.clip(150, 0, 100));
 
 
 // // This function sends the data for a circle to the server
