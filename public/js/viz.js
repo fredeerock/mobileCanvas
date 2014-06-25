@@ -77,7 +77,7 @@ function mouseMove(event) {
 
 function draw(){
 	//Draw background
-	ctx.fillStyle = "rgba(10, 10, 10, 0.05)";
+	ctx.fillStyle = "rgba(10, 10, 10, 1)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	
 	// //Draw line
@@ -89,14 +89,24 @@ function draw(){
 
 	// Draw gradient
 
-	for (var i = 0; i < 18; i = i + 1) {
-		var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-		my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
-		my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
-		ctx.fillStyle = my_gradient;
+var bars = [];
 
-		ctx.fillRect((canvas.width/18)*i,0,(canvas.width/18)-2,canvas.height);
-	}
+for (var i = 0; i < 18; i++) {
+	bars.push(new bar(i));	
+}
+
+function bar(yStart) {
+	this.yStart = yStart;
+	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+	my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
+	my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
+	ctx.fillStyle = my_gradient;
+
+	ctx.fillRect((canvas.width/18)*yStart,0,(canvas.width/18)-5,canvas.height);
+	
+
+}
+
 
 	drawCursor(cursorXY.x, cursorXY.y);
 
@@ -104,11 +114,13 @@ function draw(){
 	requestAnimationFrame(draw);
 }
 
+
+
 function drawCursor(x, y) {
 	// console.log({moveX: x, moveY: y});
 	socket.emit('from client', {moveX: x, moveY: y});
 	ctx.beginPath();
-	ctx.fillStyle = "rgba(255, 255, 255, 1)";
+	ctx.fillStyle = "rgba(255, 0, 0, 1)";
 	ctx.arc(x, y, 20, 0, 2*Math.PI);
 	ctx.fill();
 
