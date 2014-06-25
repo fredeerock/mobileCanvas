@@ -26,8 +26,6 @@ var stopB1 = 0;
 var stopA2 = 0;
 var stopB2 = 0;
 
-
-
 window.onload = function() {
 	setup();
 	resizeCanvas();
@@ -45,14 +43,6 @@ function setup(){
 
 	// Mouse Events
 	canvas.addEventListener('mousemove', mouseMove, false);
-
-	// for (i=0; i<18 ;i++) {
-	// 	yStart[i] = 0;
-	// }
-
-	// for (var n = 0; n < 18; n++) {
-	// 	bars.push(new bar(n));	
-	// }
 
 }
 
@@ -108,66 +98,17 @@ function mouseMove(event) {
 	len = 1;
 }
 
-
-
-// var gradient
-
 function draw(){
 	//Draw background
 	ctx.fillStyle = "rgba(10, 10, 10, 1)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	
-	// //Draw line
-	// ctx.beginPath();
-	// ctx.moveTo(canvas.width/2,0);
-	// ctx.lineTo(canvas.width/2,canvas.height);
-	// ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-	// ctx.stroke();
-
-	// Draw gradient
-
-	// var bars = [];
-
-	// for (var i = 0; i < 18; i++) {
-	// 	bars.push(new bar(i));	
-	// }
-
-	// function bar(yStart) {
-	// 	this.yStart = yStart;
-	// 	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-	// 	my_gradient.addColorStop(cursorXY.y/canvas.height,"black");
-	// 	my_gradient.addColorStop(cursorXY.y/canvas.height,"white");
-	// 	ctx.fillStyle = my_gradient;
-
-	// 	ctx.fillRect((canvas.width/18)*yStart,0,(canvas.width/18)-5,canvas.height);
-		
-	// 	for (j=0;j<len;j++) {
-	// 		if (ctx.isPointInPath(canX[j], canY[j]) ) {
-	// 			// target[i]=-30;
-	// 			console.log("boom: " + yStart);
-	// 		}
-	// 	}
-
-	// }
-
-	// for(var i = 0; i < boardNum; i++) {
-		// var barY = yStart[i];
-		// barY[i]++;
-
-		// barY[i] = cursorXY.y/canvas.height;
-
-		// console.log(yStart[i]);
-
-		// for(var i = 0; i < 2; i++) {
 
 			ctx.beginPath();
 			var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
 
-			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
 			my_gradient.addColorStop(stopA1,"black");
 			my_gradient.addColorStop(stopB1,"white");
 
-			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
 			ctx.rect((canvas.width/boardNum)*0,0,(canvas.width/boardNum)-5,canvas.height);
 
 			ctx.fillStyle = my_gradient;
@@ -178,20 +119,17 @@ function draw(){
 					stopA1 = canY[0]/canvas.height;
 					stopB1 = canY[0]/canvas.height;
 
-					// target[i]=-30;
 					console.log("boom 1");
-					// yStart[i] = cursorXY.y/canvas.height;
 				 }
+				// }
 
 
 			ctx.beginPath();
 			var my_gradient2 = ctx.createLinearGradient(0,0,0,canvas.height);
 
-			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
 			my_gradient2.addColorStop(stopA2,"black");
 			my_gradient2.addColorStop(stopB2,"white");
 
-			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
 			ctx.rect((canvas.width/boardNum)*1,0,(canvas.width/boardNum)-5,canvas.height);
 
 			ctx.fillStyle = my_gradient2;
@@ -202,57 +140,12 @@ function draw(){
 					stopA2 = canY[0]/canvas.height;
 					stopB2 = canY[0]/canvas.height;
 
-					// target[i]=-30;
 					console.log("boom 2");
-					// yStart[i] = cursorXY.y/canvas.height;
 				 }
-			// }
-		// }
+				// }
 
-	// }
-
-	
-
-	// console.log(bars);
-
-
-	// drawCursor(cursorXY.x, cursorXY.y);
-
-	// Recursively call draw
 	requestAnimationFrame(draw);
 }
-
-// var bars = [];
-
-// function bar(m) {
-// 	this.m = m;
-// 	// console.log("hi" + m);
-
-// 	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-
-// 			// ctx.fillRect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
-// 			my_gradient.addColorStop(stop0,"black");
-// 			my_gradient.addColorStop(stop0,"white");
-
-// 			//ctx.rect(0, 0, canvas.width/boardNum, canvas.height);
-// 			ctx.rect((canvas.width/boardNum)*m,0,(canvas.width/boardNum)-5,canvas.height);
-
-// 			ctx.fillStyle = my_gradient;
-// 			ctx.fill();
-			
-// 			// for (j=0;j<len;j++) {
-// 				if (ctx.isPointInPath(canX[0], canY[0]) ) {
-// 					stop0 = canY[0]/canvas.height;
-// 					stop1 = canY[0]/canvas.height;
-
-// 					// target[i]=-30;
-// 					console.log("boom");
-// 					// yStart[i] = cursorXY.y/canvas.height;
-// 				// }
-// 			}
-// }
-
-
 
 function drawCursor(x, y) {
 	// console.log({moveX: x, moveY: y});
