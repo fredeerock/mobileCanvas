@@ -125,10 +125,6 @@ Math.clip = function(number, min, max) {
   return Math.max(min, Math.min(number, max));
 }
 
-Number.prototype.clamp = function(min, max) {
-  return Math.min(Math.max(this, min), max);
-};
-
 // console.log(Math.clip(150, 0, 100));
 
 
