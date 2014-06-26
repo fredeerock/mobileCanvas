@@ -59,7 +59,7 @@ function touchStart(event) {
 
 function touchEnd(event) {
 	console.log( "handleEnd" );
-	len = e.targetTouches.length;
+	len = event.targetTouches.length;
 }
 
 function touchCancel(event) {
@@ -76,7 +76,7 @@ function touchMove(event) {
 	// Stop iOS from bouncing on drag
 	event.preventDefault();
 
-	len = e.targetTouches.length;
+	len = event.targetTouches.length;
 	
 	for (i=0; i<len; i++) {
 		canX[i] = event.targetTouches[i].pageX - canvas.offsetLeft;
@@ -116,11 +116,13 @@ function Bar(pos){
 		ctx.fillStyle = my_gradient;
 		ctx.fill();
 		
-		if (ctx.isPointInPath(canX[0], canY[0]) ) {
-			stopA = canY[0]/canvas.height;
-			stopB = canY[0]/canvas.height;
+		for (j = 0;j < len; j++) {
+			if (ctx.isPointInPath(canX[j], canY[j]) ) {
+				stopA = canY[j]/canvas.height;
+				stopB = canY[j]/canvas.height;
 
-			console.log("boom" + i);
+				//console.log("boom" + i);
+			}
 		}
 	};
 }
@@ -139,49 +141,6 @@ function draw(){
 	for(i in bars) {
 		bars[i].display();
 	}
-
-	// for(var i = 0; i < 2; i++) {
-	// 	ctx.beginPath();
-	// 	var my_gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-
-	// 	my_gradient.addColorStop(stopA1,"black");
-	// 	my_gradient.addColorStop(stopB1,"white");
-
-	// 	ctx.rect((canvas.width/boardNum)*i,0,(canvas.width/boardNum)-5,canvas.height);
-
-	// 	ctx.fillStyle = my_gradient;
-	// 	ctx.fill();
-		
-	// 	// for (j=0;j<len;j++) {
-	// 		if (ctx.isPointInPath(canX[0], canY[0]) ) {
-	// 			stopA1 = canY[0]/canvas.height;
-	// 			stopB1 = canY[0]/canvas.height;
-
-	// 			console.log("boom" + i);
-	// 		}
-	// 	// }
-	// }
-
-
-	// ctx.beginPath();
-	// var my_gradient2 = ctx.createLinearGradient(0,0,0,canvas.height);
-
-	// my_gradient2.addColorStop(stopA2,"black");
-	// my_gradient2.addColorStop(stopB2,"white");
-
-	// ctx.rect((canvas.width/boardNum)*1,0,(canvas.width/boardNum)-5,canvas.height);
-
-	// ctx.fillStyle = my_gradient2;
-	// ctx.fill();
-	
-	// // for (j=0;j<len;j++) {
-	// 	if (ctx.isPointInPath(canX[0], canY[0]) ) {
-	// 		stopA2 = canY[0]/canvas.height;
-	// 		stopB2 = canY[0]/canvas.height;
-
-	// 		console.log("boom 2");
-	// 	 }
-	// 	// }
 
 	requestAnimationFrame(draw);
 }
