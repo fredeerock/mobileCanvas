@@ -49,7 +49,7 @@ var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), '
 
 console.log("Static file server running at => http://localhost:" + port);
 
- 
+
 ///////////////
 //Socket.io //
 //////////////
@@ -62,8 +62,18 @@ io.on('connection', function (socket) {
   socket.emit('from server', { server: 'hello client' });
 
   // Receive data from client with socket.on
-  socket.on('from client', function (data) { console.log(data); });
+  socket.on('from client', function (data) { 
+     
+    // client.send('/oscmsg', data.board);
 
+    if (data.board !== undefined) {
+      console.log(data.board);
+      client.send('/board', data.board, '/user', data.user);
+    }
+
+  });
+
+  
 
   // // Send circles to everyone
   // socket.on( 'drawCircle', function( data ) {
@@ -76,6 +86,11 @@ io.on('connection', function (socket) {
   // });
 
 });
+
+var osc = require('node-osc');
+var client = new osc.Client('127.0.0.1', 3332);
+
+var osc = require('./node_modules/node-osc/lib/osc');
 
 
 

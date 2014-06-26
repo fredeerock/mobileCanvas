@@ -1,9 +1,10 @@
 {
-  "name": "sockets",
-  "description": "A package using versioning best-practices",
+  "name": "hummingMiss",
+  "description": "An art project using Socket.io, Node.js, node-osc, and Max.",
   "author": "Derick Ostrenko <dostenko@gmail.com>",
   "dependencies": {
-    "socket.io": "1.0.x"
+    "socket.io": "1.0.x",
+    "node-osc": "0.2.x"
   },
   "engines": {
     "node": "0.10.x"

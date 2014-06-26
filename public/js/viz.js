@@ -5,6 +5,9 @@
 /*
 TODO
 - integrate NexusUI elements
+- check it works with hummingmissaudioclient.js
+	- upload this to mac mini
+- add usgs visual elements
 
 */
 
@@ -59,6 +62,7 @@ function mouseDown() {
 }
 
 function mouseUp() {
+	//console.log( "mouseUp" );
 	mouseIsDown = 0;
 	mouseMove();
 }
@@ -110,7 +114,6 @@ function mouseMove(e) {
 
 	len = 1;
 
-
 }
 
 function Bar(pos){
@@ -135,11 +138,19 @@ function Bar(pos){
 			if (ctx.isPointInPath(canX[j], canY[j]) && mouseIsDown) {
 				stopA = canY[j]/canvas.height;
 				stopB = canY[j]/canvas.height;
+				
+				var touchData = {user: sessionid, board: i, yPos: canY[j], toggle: mouseIsDown};
+				sendData(touchData); 
 
-				socket.emit('from client', {user: sessionid, board: i, yPos: canY[j]});
 			}
 		}
 	};
+}
+
+function sendData(touchData) {
+	socket.emit('from client', touchData);
+	//FIXME: The toggle doesn't work. We need to let just one 0 go through.
+
 }
 
 var bars = [];
