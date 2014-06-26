@@ -3,9 +3,8 @@
 ////////////////////
 
 /*
-TODsO
-- gradients based on mouse positoin
-- make a new viz with NexusUI elements
+TODO
+- integrate NexusUI elements
 
 */
 
