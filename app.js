@@ -6,7 +6,8 @@ var http = require("http"),
     url = require("url"),
     path = require("path"),
     fs = require("fs"),
-    port = process.argv[2] || 3000;
+    port = process.env.PORT || 3000;
+    //port = process.argv[2] || 3000;
 
 var contentTypes = {
     '.html': 'text/html',
