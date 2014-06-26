@@ -141,6 +141,10 @@ function draw(){
 	for(i in bars) {
 		bars[i].display();
 	}
+	
+	for (j = 0;j < len; j++) {
+		drawCursor(canX[j], canY[j]);
+	}
 
 	requestAnimationFrame(draw);
 }
