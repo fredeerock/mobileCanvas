@@ -5,8 +5,6 @@
 	<title>Sockets!</title>
 
 	<script src="/socket.io/socket.io.js"></script>
- 
- <script src="http://jsconsole.com/remote.js?19D04C0A-87D2-4FAC-B4D2-D8B7071CE058"></script>
 
 	<style type="text/css"> 
 		body {margin: 0; padding: 0;} 
@@ -34,9 +32,14 @@
 			socket.emit('from client', { client: 'hello server' });
 		}
 
+		var sessionid;
+
 		// Receive a hello from the server
 		socket.on('from server', function (data) {
 			console.log(data);
+			
+			sessionid = socket.io.engine.id;
+			console.log(sessionid);
 		});
 
 	</script>

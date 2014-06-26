@@ -30,7 +30,8 @@ window.onload = function() {
 	setup();
 	resizeCanvas();
 	requestAnimationFrame(draw);
-	socket.emit('from client', "hello server" );
+
+	socket.emit('from client', "hello server! " + socket.io.engine.id );
 };
 
 function setup(){
@@ -104,11 +105,6 @@ function touchMove(e) {
 
 function mouseMove(e) {
 	if (!e) {e = event;}
-	// var mx = event.clientX;
-	// var my = event.clientY;
-	// drawCursor(mx, my);
-	// cursorXY.x = mx;
-	// cursorXY.y = my;
 
 	canX[0] = event.pageX - canvas.offsetLeft;
 	canY[0] = event.pageY - canvas.offsetTop;
@@ -141,8 +137,7 @@ function Bar(pos){
 				stopA = canY[j]/canvas.height;
 				stopB = canY[j]/canvas.height;
 
-				//console.log("boom" + i);
-				socket.emit('from client', {board: i, yPos: canY[j]});
+				socket.emit('from client', {user: sessionid, board: i, yPos: canY[j]});
 			}
 		}
 	};

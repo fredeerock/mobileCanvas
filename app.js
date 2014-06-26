@@ -5,7 +5,7 @@
 var http = require("http"),
     url = require("url"),
     path = require("path"),
-    fs = require("fs")
+    fs = require("fs"),
     port = process.argv[2] || 3000;
 
 var contentTypes = {
@@ -16,8 +16,7 @@ var contentTypes = {
 
 var app = http.createServer(function(request, response) {
 
-  var uri = url.parse(request.url).pathname
-    , filename = path.join(process.cwd(), '/public', uri);
+var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), '/public', uri);
   
   path.exists(filename, function(exists) {
     if(!exists) {
@@ -62,7 +61,7 @@ io.on('connection', function (socket) {
   socket.emit('from server', { server: 'hello client' });
 
   // Receive data from client with socket.on
-  socket.on('from client', function (data) { console.log(data) });
+  socket.on('from client', function (data) { console.log(data); });
 
 
   // // Send circles to everyone
