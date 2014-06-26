@@ -49,7 +49,7 @@ var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), '
 
 console.log("Static file server running at => http://localhost:" + port);
 
-
+ 
 ///////////////
 //Socket.io //
 //////////////
