@@ -65,10 +65,13 @@ io.on('connection', function (socket) {
   socket.on('from client', function (data) { 
      
     // client.send('/oscmsg', data.board);
-
-    if (data.board !== undefined) {
-      console.log(data.board);
-      client.send('/board', data.board, '/user', data.user);
+    console.log(data);
+    
+    if (data.board !== undefined && data.user !== undefined && data.yPos !== undefined) {
+      client.send('/board', data.board);
+      client.send('/user', data.user);
+      client.send('/yPos', data.yPos);
+      client.send('/toggle', data.toggle);
     }
 
   });
@@ -89,7 +92,6 @@ io.on('connection', function (socket) {
 
 var osc = require('node-osc');
 var client = new osc.Client('127.0.0.1', 3332);
-
 var osc = require('./node_modules/node-osc/lib/osc');
 
 
