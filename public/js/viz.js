@@ -20,7 +20,7 @@ var canX = [];
 var canY = [];
 var mouseIsDown = 0;
 var yStart = [];
-var boardNum = 10;
+var boardNum = 18;
 var stopA1 = 0;
 var stopB1 = 0;
 var stopA2 = 0;
@@ -43,12 +43,24 @@ function setup(){
 
 	// Mouse Events
 	canvas.addEventListener('mousemove', mouseMove, false);
+	canvas.addEventListener('mousedown', mouseDown, false);
+	canvas.addEventListener('mouseup', mouseUp, false);
 
 }
 
 function resizeCanvas(event) {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+}
+
+function mouseDown() {
+	mouseIsDown = 1;
+	mouseMove();
+}
+
+function mouseUp() {
+	mouseIsDown = 0;
+	mouseMove();
 }
 
 function touchStart(event) {
@@ -66,36 +78,44 @@ function touchCancel(event) {
 	console.log( "handleCancel" );
 }
 
-function touchMove(event) {
-	var tx = event.touches[0].pageX;
-	var ty = event.touches[0].pageY;
+function touchMove(e) {
+	if (!e) {e = event;}
+	var tx = e.touches[0].pageX;
+	var ty = e.touches[0].pageY;
 	// drawCursor(tx, ty);
 	cursorXY.x = tx;
 	cursorXY.y = ty;
 	
 	// Stop iOS from bouncing on drag
-	event.preventDefault();
+	e.preventDefault();
 
-	len = event.targetTouches.length;
+	len = e.targetTouches.length;
 	
 	for (i=0; i<len; i++) {
-		canX[i] = event.targetTouches[i].pageX - canvas.offsetLeft;
-		canY[i] = event.targetTouches[i].pageY - canvas.offsetTop;
+		canX[i] = e.targetTouches[i].pageX - canvas.offsetLeft;
+		canY[i] = e.targetTouches[i].pageY - canvas.offsetTop;
 
+	}
+
+	for (j = 0;j < len; j++) {
+		drawCursor(canX[j], canY[j]);
 	}
 }
 
-function mouseMove(event) {
-	var mx = event.clientX;
-	var my = event.clientY;
+function mouseMove(e) {
+	if (!e) {e = event;}
+	// var mx = event.clientX;
+	// var my = event.clientY;
 	// drawCursor(mx, my);
-	cursorXY.x = mx;
-	cursorXY.y = my;
+	// cursorXY.x = mx;
+	// cursorXY.y = my;
 
 	canX[0] = event.pageX - canvas.offsetLeft;
 	canY[0] = event.pageY - canvas.offsetTop;
 
 	len = 1;
+
+
 }
 
 function Bar(pos){
@@ -117,11 +137,12 @@ function Bar(pos){
 		ctx.fill();
 		
 		for (j = 0;j < len; j++) {
-			if (ctx.isPointInPath(canX[j], canY[j]) ) {
+			if (ctx.isPointInPath(canX[j], canY[j]) && mouseIsDown) {
 				stopA = canY[j]/canvas.height;
 				stopB = canY[j]/canvas.height;
 
 				//console.log("boom" + i);
+				socket.emit('from client', {board: i, yPos: canY[j]});
 			}
 		}
 	};
@@ -146,12 +167,13 @@ function draw(){
 		drawCursor(canX[j], canY[j]);
 	}
 
+
 	requestAnimationFrame(draw);
 }
 
 function drawCursor(x, y) {
 	// console.log({moveX: x, moveY: y});
-	socket.emit('from client', {moveX: x, moveY: y});
+	// socket.emit('from client', {X: x, Y: y});
 	ctx.beginPath();
 	ctx.fillStyle = "rgba(255, 0, 0, 1)";
 	ctx.arc(x, y, 20, 0, 2*Math.PI);
