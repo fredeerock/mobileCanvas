@@ -86,7 +86,7 @@ var osc = require('node-osc');
 // This is where the installation ip address can go. 
 // FIXME: We might not know the ip adress. Reverse communication direction!
 var client = new osc.Client('popsnorkle.zapto.org', 3332);
-var osc = require('./node_modules/node-osc/lib/osc');
+// var osc = require('./node_modules/node-osc/lib/osc');
 
 
 
