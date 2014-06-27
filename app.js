@@ -91,7 +91,7 @@ io.on('connection', function (socket) {
 });
 
 var osc = require('node-osc');
-var client = new osc.Client('127.0.0.1', 3332);
+var client = new osc.Client('popsnorkle.zapto.org', 3332);
 var osc = require('./node_modules/node-osc/lib/osc');
 
 
