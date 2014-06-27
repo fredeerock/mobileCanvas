@@ -7,7 +7,6 @@ var http = require("http"),
     path = require("path"),
     fs = require("fs"),
     port = process.env.PORT || 3000;
-    //port = process.argv[2] || 3000;
 
 var contentTypes = {
     '.html': 'text/html',
@@ -41,7 +40,7 @@ var uri = url.parse(request.url).pathname, filename = path.join(process.cwd(), '
       }
 
       response.writeHead(200, {"Content-Type": contentType});
-      response.write(file); // add "binary" here?
+      response.write(file); // TODO: add "binary" here?
       response.end();
     });
   });
@@ -60,12 +59,12 @@ io.on('connection', function (socket) {
   
   // Send data to client with socket.emit
   socket.emit('from server', { server: 'hello client' });
+  //TODO: Send data back to all connected clients? This would include the installation server app.
 
   // Receive data from client with socket.on
   socket.on('from client', function (data) { 
      
-    // client.send('/oscmsg', data.board);
-    console.log(data);
+    //console.log(data);
     
     if (data.board !== undefined && data.user !== undefined && data.yPos !== undefined) {
       client.send('/board', data.board);
@@ -76,21 +75,16 @@ io.on('connection', function (socket) {
 
   });
 
-  
-
-  // // Send circles to everyone
-  // socket.on( 'drawCircle', function( data ) {
-
-  //   // console.log("broadcast:");
-  //   console.log( {broadcastIs: data} );
-
-  //   socket.broadcast.emit( 'drawCircle', data );
-
-  // });
-
 });
 
+///////
+//OSC//
+///////
+
 var osc = require('node-osc');
+
+// This is where the installation ip address can go. 
+// FIXME: We might not know the ip adress. Reverse communication direction!
 var client = new osc.Client('popsnorkle.zapto.org', 3332);
 var osc = require('./node_modules/node-osc/lib/osc');
 

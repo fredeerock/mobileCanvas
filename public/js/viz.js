@@ -33,7 +33,9 @@ window.onload = function() {
 	resizeCanvas();
 	requestAnimationFrame(draw);
 
-	socket.emit('from client', "hello server! " + socket.io.engine.id );
+	if(socket.io.engine.id !== undefined){
+		socket.emit('from client', "hello server! " + socket.io.engine.id );
+	}
 };
 
 function setup(){
@@ -187,9 +189,9 @@ function drawCursor(x, y) {
 }
 
 
-Math.clip = function(number, min, max) {
-  return Math.max(min, Math.min(number, max));
-};
+// Math.clip = function(number, min, max) {
+//   return Math.max(min, Math.min(number, max));
+// };
 
 // console.log(Math.clip(150, 0, 100));
 

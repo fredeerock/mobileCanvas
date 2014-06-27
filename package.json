@@ -4,7 +4,8 @@
   "author": "Derick Ostrenko <dostenko@gmail.com>",
   "dependencies": {
     "socket.io": "1.0.x",
-    "node-osc": "0.2.x"
+    "node-osc": "0.2.x",
+    "socket.io-client": "1.0.x"
   },
   "engines": {
     "node": "0.10.x"
